@@ -4,21 +4,19 @@ $(document).ready(onReady);
 
 function onReady() {
     //calls artistList function on page load. 
-   render();
+   artistList();
+   songList();
+   albumList();;
     // TODO Add ajax request for /songs and display on DOM
 }
 //function to render to DOM when called
-function render() {
-
-    artistList();
-    songList();
-    albumList();
-
-}
+   
 
 function artistList() {
     //using jquery to call ajax
     //using ajax to get /artist from the server.
+    $('artistTableBody').empty();
+
     $.ajax({
         type: 'GET',
         url: '/artist'
@@ -42,13 +40,17 @@ function artistList() {
 //function render to DOM. 
 function songList() {
 
+        $('#songTableBody').empty();
+
         $.ajax({
             type: 'GET',
             url: '/songs'
 
-        }).then(function (songs) {
+        }).then(function ( response ) {
 
-            for (let song of response ) {
+            let songs = response;
+
+            for (let song of songs ) {
                 $('#songTableBody').append(`
                     <tr>
                         <td>${song.title}</td>
@@ -57,10 +59,9 @@ function songList() {
                 `);
             }
         }).catch(function(err) {
-            alert('Request Failed');
+            alert('Song Request Failed');
             console.log('Request failed', err)
-
-        })
+        });
 
 
 }
@@ -68,12 +69,16 @@ function songList() {
 //function render to DOM.
 function albumList() {
 
+        $('#albumTableBody').empty();
+
         $.ajax({
             type: 'GET',
             url: '/albums'
         }).then(function(response) {
+
+            let albums = response
             
-            for ( let album of response ) {
+            for ( let album of albums ) {
                 $('#albumTableBody').append(`
                     <tr>
                         <td>${album.title}</td>
@@ -82,8 +87,7 @@ function albumList() {
                 `);
             }
         }).catch(function(err) {
-            alert('Request Failed');
+            alert('Album Request Failed');
             console.log('Request failed', err)
-
-        })
+        });
 }
