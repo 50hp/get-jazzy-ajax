@@ -10,7 +10,12 @@ function onReady() {
     // TODO Add ajax request for /songs and display on DOM
 }
 //function to render to DOM when called
+function render () {
    
+    artistList();
+    songList();
+    albumList();;
+} 
 
 function artistList() {
     //using jquery to call ajax
